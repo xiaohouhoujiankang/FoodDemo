@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -12,7 +13,7 @@ public class FoodInfoVo {
     private String publishTime;
     private String foodIntroduce;
     private int pageView;
-    private String[] slideShow;
+    private List slideShow;
 
 
 }

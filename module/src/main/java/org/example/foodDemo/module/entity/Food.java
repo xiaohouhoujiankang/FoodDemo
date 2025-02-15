@@ -12,10 +12,10 @@ public class Food {
     private String name;
     private String foodPhotos;
     private String foodIntroduce;
-    private int viewCount;
-    private int createTime;
-    private int updateTime;
-    private int isDeleted;
+    private Integer viewCount;
+    private Integer createTime;
+    private Integer updateTime;
+    private Integer isDeleted;
 }
 
 

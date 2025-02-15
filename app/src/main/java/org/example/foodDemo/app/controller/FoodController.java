@@ -27,7 +27,7 @@ public class FoodController {
         vo.setFoodIntroduce(food.getFoodIntroduce());
         vo.setPageView(food.getViewCount());
         vo.setPublishTime(String.valueOf(food.getCreateTime()));
-        vo.setSlideShow(food.getFoodPhotos().split("\\$"));
+        vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
         return vo;
     }
     @RequestMapping("/food/list")

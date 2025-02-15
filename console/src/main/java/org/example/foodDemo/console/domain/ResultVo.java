@@ -1,6 +1,7 @@
 package org.example.foodDemo.console.domain;
 
 
+import lombok.Data;
 
 
 public class ResultVo {

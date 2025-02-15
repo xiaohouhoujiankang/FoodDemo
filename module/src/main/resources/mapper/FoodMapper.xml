@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.foodDemo.module.mapper.FoodMapper">
+    <select id="selectFoodById" parameterType="BigInteger" resultType="org.example.foodDemo.module.entity.Food">
+        SELECT * FROM food WHERE id = #{id} AND is_deleted = 0
+    </select>
+    <insert id ="insert"
+            parameterType="org.example.foodDemo.module.entity.Food">
+        insert into food (name,food_photos,food_introduce,view_count,create_time,update_time,is_deleted)
+        values (#{food.name},#{food.foodPhotos},#{food.foodIntroduce},#{food.viewCount},#{food.createTime},#{food.updateTime},#{food.isDeleted})
+    </insert>
+
+
+    <update id = "update"
+            parameterType="org.example.foodDemo.module.entity.Food">
+        update food set name = #{food.name},
+                           food_photos = #{food.foodPhotos},
+                           food_introduce = #{food.foodIntroduce},
+                           update_time = #{food.updateTime}
+        where id = #{food.id}
+    </update>
+    <update id="deleteById" parameterType="BigInteger">
+        UPDATE food SET is_deleted = 1 WHERE id = #{foodId}
+    </update>
+</mapper>

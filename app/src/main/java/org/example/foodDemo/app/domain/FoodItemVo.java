@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 @Data
 public class FoodItemVo {
-    private BigInteger id;
+    private BigInteger foodId;
     private String foodPhoto;
     private String foodName;
 }

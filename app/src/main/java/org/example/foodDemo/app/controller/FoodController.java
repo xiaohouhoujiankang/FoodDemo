@@ -23,7 +23,7 @@ public class FoodController {
     public FoodInfoVo getFoodInfo(@RequestParam BigInteger foodId) {
         Food food = foodService.selectFoodById(foodId);
         FoodInfoVo vo = new FoodInfoVo();
-        vo.setName(food.getName());
+        vo.setFoodName(food.getName());
         vo.setFoodIntroduce(food.getFoodIntroduce());
         vo.setPageView(food.getViewCount());
         vo.setPublishTime(String.valueOf(food.getCreateTime()));
@@ -35,7 +35,7 @@ public class FoodController {
         List<Food> foods = foodService.selectAllFoods();
         List<FoodItemVo> voList = foods.stream().map(food -> {
             FoodItemVo vo = new FoodItemVo();
-            vo.setId(food.getId());
+            vo.setFoodId(food.getId());
             vo.setFoodName(food.getName());
             vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             return vo;

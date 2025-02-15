@@ -8,7 +8,7 @@ import java.math.BigInteger;
 @Data
 @Accessors(chain = true)
 public class FoodInfoVo {
-    private String name;
+    private String foodName;
     private String publishTime;
     private String foodIntroduce;
     private int pageView;

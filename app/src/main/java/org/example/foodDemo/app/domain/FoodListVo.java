@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 
 import java.util.List;
 
-
+@Data
 @Accessors(chain = true)
 public class FoodListVo {
 
@@ -17,11 +17,4 @@ public class FoodListVo {
         this.list = list;
     }
 
-    public List<FoodItemVo> getList() {
-        return list;
-    }
-
-    public void setList(List<FoodItemVo> list) {
-        this.list = list;
-    }
 }

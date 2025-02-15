@@ -1,6 +1,7 @@
 package org.example.foodDemo.app.controller;
 
 import org.example.foodDemo.app.domain.FoodInfoVo;
+import org.example.foodDemo.app.domain.FoodItemVo;
 import org.example.foodDemo.app.domain.FoodListVo;
 import org.example.foodDemo.module.entity.Food;
 import org.example.foodDemo.module.mapper.FoodMapper;
@@ -22,7 +23,6 @@ public class FoodController {
     public FoodInfoVo getFoodInfo(@RequestParam BigInteger foodId) {
         Food food = foodService.selectFoodById(foodId);
         FoodInfoVo vo = new FoodInfoVo();
-        vo.setId(food.getId());
         vo.setName(food.getName());
         vo.setFoodIntroduce(food.getFoodIntroduce());
         vo.setPageView(food.getViewCount());
@@ -33,14 +33,14 @@ public class FoodController {
     @RequestMapping("/food/list")
     public FoodListVo getFoodList() {
         List<Food> foods = foodService.selectAllFoods();
-        List<FoodInfoVo> foodInfos = foods.stream().map(food -> {
-            FoodInfoVo vo = new FoodInfoVo();
+        List<FoodItemVo> voList = foods.stream().map(food -> {
+            FoodItemVo vo = new FoodItemVo();
             vo.setId(food.getId());
-            vo.setName(food.getName());
-            vo.setFoodPhotos(food.getFoodPhotos().split("\\$")[0]);
+            vo.setFoodName(food.getName());
+            vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             return vo;
         }).collect(Collectors.toList());
-        return new FoodListVo(foodInfos);
+        return new FoodListVo(voList);
     }
 
 }

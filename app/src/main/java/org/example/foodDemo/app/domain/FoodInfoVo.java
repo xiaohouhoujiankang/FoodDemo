@@ -12,6 +12,6 @@ public class FoodInfoVo {
     private String publishTime;
     private String foodIntroduce;
     private Integer pageView;
-    private List slideShow;
+    private List<String> slideShow;
 
 }

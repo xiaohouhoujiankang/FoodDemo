@@ -19,7 +19,5 @@
                            update_time = #{food.updateTime}
         where id = #{food.id}
     </update>
-    <update id="deleteById" parameterType="BigInteger">
-        UPDATE food SET is_deleted = 1 WHERE id = #{foodId}
-    </update>
+
 </mapper>

@@ -14,7 +14,7 @@ public class FoodConsoleController {
    @Autowired
    private FoodService service;
    @RequestMapping("/food/create")
-   public ResultVo FoodCreate(@RequestParam(name = "name") String name,
+   public ResultVo foodCreate(@RequestParam(name = "name") String name,
                               @RequestParam(name = "foodPhotos") String foodPhotos,
                               @RequestParam(name = "foodIntroduce") String foodIntroduce){
       int result = service.createFood(name,foodPhotos,foodIntroduce);
@@ -22,7 +22,7 @@ public class FoodConsoleController {
 
    }
    @RequestMapping("/food/update")
-   public ResultVo FoodUpdate(@RequestParam(name = "id") BigInteger id,
+   public ResultVo foodUpdate(@RequestParam(name = "id") BigInteger id,
                             @RequestParam(name = "name") String name,
                             @RequestParam(name = "foodPhotos") String foodPhotos,
                             @RequestParam(name = "foodIntroduce") String foodIntroduce){
@@ -30,7 +30,7 @@ public class FoodConsoleController {
       return new ResultVo(1 == result ?"成功":"失败");
    }
    @RequestMapping("/food/delete")
-   public ResultVo FoodDelete(@RequestParam(name = "id") BigInteger id){
+   public ResultVo foodDelete(@RequestParam(name = "id") BigInteger id){
       int result = service.deleteFood(id);
       return new ResultVo(1 == result ?"成功":"失败");
    }

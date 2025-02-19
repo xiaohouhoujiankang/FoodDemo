@@ -1,4 +1,4 @@
-package org.example.foodDemo.app.domain;
+package org.example.food_demo.app.domain;
 
 
 

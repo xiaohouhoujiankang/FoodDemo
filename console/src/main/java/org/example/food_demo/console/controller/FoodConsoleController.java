@@ -1,6 +1,6 @@
-package org.example.foodDemo.console.controller;
-import org.example.foodDemo.console.domain.ResultVo;
-import org.example.foodDemo.module.service.FoodService;
+package org.example.food_demo.console.controller;
+import org.example.food_demo.console.domain.ResultVo;
+import org.example.food_demo.module.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +17,8 @@ public class FoodConsoleController {
    public ResultVo foodCreate(@RequestParam(name = "name") String name,
                               @RequestParam(name = "foodPhotos") String foodPhotos,
                               @RequestParam(name = "foodIntroduce") String foodIntroduce){
+      name = name.trim();
+      foodIntroduce = foodIntroduce.trim();
       int result = service.createFood(name,foodPhotos,foodIntroduce);
       return new ResultVo(1 == result ?"成功":"失败");
 
@@ -26,6 +28,8 @@ public class FoodConsoleController {
                             @RequestParam(name = "name") String name,
                             @RequestParam(name = "foodPhotos") String foodPhotos,
                             @RequestParam(name = "foodIntroduce") String foodIntroduce){
+      name = name.trim();
+      foodIntroduce = foodIntroduce.trim();
       int result = service.updateFood(id,name,foodPhotos,foodIntroduce);
       return new ResultVo(1 == result ?"成功":"失败");
    }

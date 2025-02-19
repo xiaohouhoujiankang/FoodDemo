@@ -1,4 +1,4 @@
-package org.example.foodDemo.console.domain;
+package org.example.food_demo.console.domain;
 
 
 import lombok.Data;

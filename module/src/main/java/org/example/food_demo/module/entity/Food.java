@@ -1,4 +1,4 @@
-package org.example.foodDemo.module.entity;
+package org.example.food_demo.module.entity;
 
 
 import lombok.Data;

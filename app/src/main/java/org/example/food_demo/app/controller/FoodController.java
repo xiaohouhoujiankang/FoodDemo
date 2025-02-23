@@ -31,8 +31,9 @@ public class FoodController {
         return vo;
     }
     @RequestMapping("/food/list")
-    public FoodListVo getFoodList() {
-        List<Food> foods = foodService.selectAllFoods();
+    public FoodListVo getFoodList(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                  @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize) {
+        List<Food> foods = foodService.selectByLimit(page, pageSize);
         List<FoodItemVo> voList = new ArrayList<>();
         for (int i = 0; i < foods.size(); i++) {
             Food food = foods.get(i);
@@ -42,7 +43,8 @@ public class FoodController {
             vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             voList.add(vo);
         }
-        return new FoodListVo(voList);
+        boolean isEnd =  foods.size() < pageSize;
+        return new FoodListVo(voList,isEnd);
     }
 
 }

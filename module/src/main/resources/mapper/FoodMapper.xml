@@ -17,8 +17,8 @@
         <if test="food.foodPhotos != null and food.foodPhotos != ''">#{food.foodPhotos},</if>
         <if test="food.foodIntroduce != null and food.foodIntroduce != ''">#{food.foodIntroduce},</if>
         <if test="food.viewCount != null">#{food.viewCount},</if>
-        <if test="food.createTime != null">#{food.createTime},</if>
-        <if test="food.updateTime != null">#{food.updateTime},</if>
+        <if test="food.createTime != null">#{food.createTime,jdbcType=TIMESTAMP},</if>
+        <if test="food.updateTime != null">#{food.updateTime,jdbcType=TIMESTAMP},</if>
         #{food.isDeleted}
         )
     </insert>
@@ -32,10 +32,19 @@
             <if test="food.foodPhotos != null and food.foodPhotos != ''">food_photos = #{food.foodPhotos},</if>
             <if test="food.foodIntroduce != null and food.foodIntroduce != ''">food_introduce = #{food.foodIntroduce},</if>
             <if test="food.viewCount != null">view_count = #{food.viewCount},</if>
-            <if test="food.updateTime != null">update_time = #{food.updateTime},</if>
+            <if test="food.updateTime != null">update_time = #{food.updateTime,jdbcType=TIMESTAMP},</if>
             <if test="food.isDeleted != null">is_deleted = #{food.isDeleted},</if>
         </set>
         where id = #{food.id}
     </update>
+    <select id="selectByLimit"
+            parameterType="map" resultType="org.example.food_demo.module.entity.Food">
+        SELECT id, name, food_photos, food_introduce, view_count, create_time, update_time
+        FROM food
+        WHERE is_deleted = 0
+        ORDER BY id
+            LIMIT #{offset}, #{limit}
+    </select>
+
 
 </mapper>

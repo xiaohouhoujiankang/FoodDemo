@@ -21,4 +21,7 @@ public interface FoodMapper {
    int insert(@Param("food") Food food);
    @Update("update food set is_deleted=1,update_time=#{time} where id=#{id} limit 1")
     int delete(@Param("id") BigInteger id,@Param("time") Integer time);
+    List<Food> selectByLimit(Integer offset, Integer limit);
+    @Select("SELECT COUNT(*) FROM food WHERE is_deleted = 0")
+    int getTotalCount();
 }

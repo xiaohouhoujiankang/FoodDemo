@@ -14,8 +14,8 @@ public class Food {
     private String foodPhotos;
     private String foodIntroduce;
     private Integer viewCount;
-    private Integer createTime;
-    private Integer updateTime;
+    private String createTime;
+    private String updateTime;
     private Integer isDeleted;
 }
 

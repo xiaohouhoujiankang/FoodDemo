@@ -12,9 +12,12 @@ import java.util.List;
 public class FoodListVo {
 
     private List<FoodItemVo> list;
+    private Boolean isEnd;
 
-    public FoodListVo(List<FoodItemVo> list) {
+    public FoodListVo(List<FoodItemVo> list,Boolean isEnd) {
         this.list = list;
+        this.isEnd = isEnd;
     }
+
 
 }

@@ -61,7 +61,7 @@ public class FoodConsoleController {
       vo.setFoodName(food.getName());
       vo.setFoodIntroduce(food.getFoodIntroduce());
       vo.setPageView(food.getViewCount());
-      vo.setPublishTime(String.valueOf(food.getCreateTime()));
+      vo.setPublishTime(formatTimestamp(food.getCreateTime()));
       vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
       vo.setCreateTime(formatTimestamp((food.getCreateTime())));
       vo.setUpdateTime(formatTimestamp((food.getUpdateTime())));

@@ -9,15 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -56,7 +53,7 @@ public class FoodConsoleController {
 
    @RequestMapping("/food/info")
    public FoodInfoVo getFoodConsoleInfoVo(@RequestParam BigInteger foodId) {
-      Food food = service.selectFoodById(foodId);
+      Food food = service.getById(foodId);
       FoodInfoVo vo = new FoodInfoVo();
       vo.setFoodName(food.getName());
       vo.setFoodIntroduce(food.getFoodIntroduce());
@@ -76,7 +73,7 @@ public class FoodConsoleController {
    @RequestMapping("/food/list")
    public FoodListVO getFoodList( @RequestParam(value = "page", defaultValue = "1") Integer page,
                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
-      List<Food> foods = service.selectByLimit(page, pageSize);
+      List<Food> foods = service.selectByLimit(page, pageSize,null);
       int total = service.getTotalCount();
       List<FoodItemVo> voList = new ArrayList<>();
       for (int i = 0; i < foods.size(); i++) {

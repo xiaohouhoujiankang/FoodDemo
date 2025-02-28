@@ -11,29 +11,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 @RestController
 public class FoodController {
     @Autowired
     private FoodService foodService;
+
     @RequestMapping("/food/info")
     public FoodInfoVo getFoodInfo(@RequestParam BigInteger foodId) {
-        Food food = foodService.selectFoodById(foodId);
+        Food food = foodService.getById(foodId);
         FoodInfoVo vo = new FoodInfoVo();
         vo.setFoodName(food.getName());
         vo.setFoodIntroduce(food.getFoodIntroduce());
         vo.setPageView(food.getViewCount());
-        vo.setPublishTime(String.valueOf(food.getCreateTime()));
+        vo.setPublishTime(formatTimestamp(food.getCreateTime()));
         vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
         return vo;
     }
+    private String formatTimestamp(String timestamp) {
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(Long.parseLong(timestamp)), ZoneId.systemDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return dateTime.format(formatter);
+    }
+
     @RequestMapping("/food/list")
     public FoodListVo getFoodList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                  @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize) {
-        List<Food> foods = foodService.selectByLimit(page, pageSize);
+                                  @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
+                                  @RequestParam(value = "keyWord", required = false) String keyWord) {
+        List<Food> foods = foodService.selectByLimit(page, pageSize,keyWord);
         List<FoodItemVo> voList = new ArrayList<>();
         for (int i = 0; i < foods.size(); i++) {
             Food food = foods.get(i);
@@ -43,8 +57,8 @@ public class FoodController {
             vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             voList.add(vo);
         }
-        boolean isEnd =  foods.size() < pageSize;
-        return new FoodListVo(voList,isEnd);
+        boolean isEnd = foods.size() < pageSize;
+        return new FoodListVo(voList, isEnd);
     }
 
 }

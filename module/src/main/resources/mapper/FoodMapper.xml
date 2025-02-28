@@ -39,11 +39,12 @@
     </update>
     <select id="selectByLimit"
             parameterType="map" resultType="org.example.food_demo.module.entity.Food">
-        SELECT id, name, food_photos, food_introduce, view_count, create_time, update_time
-        FROM food
-        WHERE is_deleted = 0
-        ORDER BY id
-            LIMIT #{offset}, #{limit}
+        SELECT * FROM food
+        <where>
+            <if test="keyWord != null and keyWord != ''">AND name LIKE CONCAT('%', #{keyWord}, '%')</if>
+            AND is_deleted = 0
+        </where>
+        LIMIT #{offset}, #{limit}
     </select>
 
 

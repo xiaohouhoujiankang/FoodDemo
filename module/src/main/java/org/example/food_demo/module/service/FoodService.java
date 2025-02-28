@@ -13,12 +13,12 @@ public class FoodService {
     @Autowired
     private FoodMapper foodMapper;
 
-    public List<Food> selectAllFoods() {
-        return foodMapper.selectAllFoods();
+    public Food extractById(BigInteger id) {
+        return foodMapper.extractById(id);
     }
 
-    public Food selectFoodById(BigInteger id) {
-        return foodMapper.selectFoodById(id);
+    public Food getById(BigInteger id) {
+        return foodMapper.getById(id);
     }
 
     public int createFood(String name, String foodPhotos, String foodIntroduce) {
@@ -48,9 +48,9 @@ public class FoodService {
         return foodMapper.delete(id, (int) (System.currentTimeMillis() / 1000));
     }
 
-    public List<Food> selectByLimit(Integer page, Integer pageSize) {
+    public List<Food> selectByLimit(Integer page, Integer pageSize,String keyWord) {
         int offset = (page -1 ) * pageSize;
-        return foodMapper.selectByLimit(offset, pageSize);
+        return foodMapper.selectByLimit(offset, pageSize, keyWord);
     }
 
     public int getTotalCount() {

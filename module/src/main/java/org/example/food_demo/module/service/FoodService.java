@@ -63,8 +63,6 @@ public class FoodService extends ServiceImpl<FoodMapper, Food> {
     }
 
     public List<Food> selectByLimit(Integer page, Integer pageSize, String keyWord) {
-        if (page == null) page = 1;
-        if (pageSize == null) pageSize = 5;
         Page<Food> pageObj = new Page<>(page, pageSize);
         QueryWrapper<Food> queryWrapper = new QueryWrapper<>();
         if (keyWord != null && !keyWord.isEmpty()) {

@@ -71,10 +71,10 @@ public class FoodConsoleController {
    }
 
    @RequestMapping("/food/list")
-   public FoodListVO getFoodList( @RequestParam(value = "page", defaultValue = "1") Integer page,
+   public FoodListVO getFoodList( @RequestParam(value = "page", defaultValue = "2") Integer page,
                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
       List<Food> foods = service.selectByLimit(page, pageSize,null);
-      int total = service.getTotalCount();
+      Long total = service.getTotalCount();
       List<FoodItemVo> voList = new ArrayList<>();
       for (int i = 0; i < foods.size(); i++) {
          Food food = foods.get(i);

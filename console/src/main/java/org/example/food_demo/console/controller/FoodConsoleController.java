@@ -22,29 +22,29 @@ import java.util.List;
 public class FoodConsoleController {
    @Autowired
    private FoodService service;
-
-   @RequestMapping("/food/create")
-   public ResultVo foodCreate(@RequestParam(name = "name") String name,
-                              @RequestParam(name = "foodPhotos") String foodPhotos,
-                              @RequestParam(name = "foodIntroduce") String foodIntroduce) {
+  @RequestMapping("/food/edit")
+   public ResultVo foodEdit(@RequestParam(name = "id") BigInteger id,
+                            @RequestParam(name = "name") String name,
+                            @RequestParam(name = "foodPhotos") String foodPhotos,
+                            @RequestParam(name = "foodIntroduce") String foodIntroduce) {
       name = name.trim();
       foodIntroduce = foodIntroduce.trim();
-      int result = service.createFood(name, foodPhotos, foodIntroduce);
-      return new ResultVo(1 == result ? "成功" : "失败");
-
-   }
-
-   @RequestMapping("/food/update")
-   public ResultVo foodUpdate(@RequestParam(name = "id") BigInteger id,
-                              @RequestParam(name = "name") String name,
-                              @RequestParam(name = "foodPhotos") String foodPhotos,
-                              @RequestParam(name = "foodIntroduce") String foodIntroduce) {
-      name = name.trim();
-      foodIntroduce = foodIntroduce.trim();
-      int result = service.updateFood(id, name, foodPhotos, foodIntroduce);
-      return new ResultVo(1 == result ? "成功" : "失败");
-   }
-
+      try {
+          if (name == null || name.isEmpty()) {
+              return new ResultVo("Name cannot be null or empty");
+          }
+          if (foodPhotos == null || foodPhotos.isEmpty()) {
+              return new ResultVo("Food photos cannot be null or empty");
+          }
+          if (foodIntroduce == null || foodIntroduce.isEmpty()) {
+              return new ResultVo("Food introduce cannot be null or empty");
+          }
+           service.editFood(id, name, foodPhotos, foodIntroduce);
+          return new ResultVo("成功");
+      } catch (RuntimeException e) {
+          return new ResultVo(e.getMessage());
+      }
+  }
    @RequestMapping("/food/delete")
    public ResultVo foodDelete(@RequestParam(name = "id") BigInteger id) {
       int result = service.deleteFood(id);
@@ -53,22 +53,47 @@ public class FoodConsoleController {
 
    @RequestMapping("/food/info")
    public FoodInfoVo getFoodConsoleInfoVo(@RequestParam BigInteger foodId) {
+       if (foodId == null ) {
+           throw new RuntimeException("foodId cannot null");
+       }
       Food food = service.getById(foodId);
+       if (food == null) {
+           throw new RuntimeException("Food with id " + foodId + " does not exist");
+       }
       FoodInfoVo vo = new FoodInfoVo();
+       String foodName = food.getName();
+       if (foodName == null || foodName.trim().isEmpty()) {
+           throw new RuntimeException("Food name cannot be null or empty");
+       }
       vo.setFoodName(food.getName());
+       String foodIntroduce = food.getFoodIntroduce();
+       if (foodIntroduce == null || foodIntroduce.trim().isEmpty()) {
+           throw new RuntimeException("Food introduce cannot be null or empty");
+       }
       vo.setFoodIntroduce(food.getFoodIntroduce());
       vo.setPageView(food.getViewCount());
+       Integer createTime = food.getCreateTime();
+       if (createTime == null) {
+           throw new RuntimeException("Create time cannot be null");
+       }
       vo.setPublishTime(formatTimestamp(food.getCreateTime()));
+
       vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
-      vo.setCreateTime(formatTimestamp((food.getCreateTime())));
-      vo.setUpdateTime(formatTimestamp((food.getUpdateTime())));
+      vo.setCreateTime(formatTimestamp(food.getCreateTime()));
+      vo.setUpdateTime(formatTimestamp(food.getUpdateTime()));
       return vo;
    }
-   private String formatTimestamp(String timestamp) {
-      LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(Long.parseLong(timestamp)), ZoneId.systemDefault());
+   private String formatTimestamp(Integer timestamp) {
+       if (timestamp == null) {
+           throw new RuntimeException("Timestamp cannot be null");
+       }
+      LocalDateTime dateTime = LocalDateTime.ofInstant(
+              Instant.ofEpochSecond(timestamp.longValue()),
+              ZoneId.systemDefault()
+      );
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
       return dateTime.format(formatter);
-   }
+}
 
    @RequestMapping("/food/list")
    public FoodListVO getFoodList( @RequestParam(value = "page", defaultValue = "1") Integer page,

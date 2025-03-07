@@ -21,35 +21,46 @@ public class FoodService {
         return foodMapper.getById(id);
     }
 
-    public int createFood(String name, String foodPhotos, String foodIntroduce) {
+    public int editFood(BigInteger id, String name, String foodPhotos, String foodIntroduce) {
         int timestamp = (int) (System.currentTimeMillis() / 1000);
+        if (name == null || name.isEmpty()) {
+            throw new RuntimeException("name cannot be null or empty");
+        }
+        if (foodPhotos == null || foodPhotos.isEmpty()) {
+            throw new RuntimeException("foodPhotos cannot be null or empty");
+        }
+        if (foodIntroduce == null || foodIntroduce.isEmpty()) {
+            throw new RuntimeException("foodIntroduce cannot be null or empty");
+        }
         Food food = new Food();
         food.setName(name);
         food.setFoodPhotos(foodPhotos);
         food.setFoodIntroduce(foodIntroduce);
-        food.setCreateTime(String.valueOf(timestamp));
-        food.setUpdateTime(String.valueOf(timestamp));
+        food.setCreateTime(timestamp);
+        food.setUpdateTime(timestamp);
         food.setIsDeleted(0);
-        return foodMapper.insert(food);
+        if (id == null) {
+            int newId = foodMapper.insert(food);
+            return newId;
+        } else {
+            Food existingFood = foodMapper.getById(id);
+            if (existingFood == null) {
+                throw new RuntimeException("Food with id " + id + " does not exist");
+            }
+            food.setId(id);
+            foodMapper.update(food);
+            return id.intValue();
+        }
     }
 
-    public int updateFood(BigInteger id, String name, String foodPhotos, String foodIntroduce) {
-        int timestamp = (int) (System.currentTimeMillis() / 1000);
-        Food food = new Food();
-        food.setId(id);
-        food.setName(name);
-        food.setFoodPhotos(foodPhotos);
-        food.setFoodIntroduce(foodIntroduce);
-        food.setUpdateTime(String.valueOf(timestamp));
-        return foodMapper.update(food);
-    }
+
 
     public int deleteFood(BigInteger id) {
         return foodMapper.delete(id, (int) (System.currentTimeMillis() / 1000));
     }
 
-    public List<Food> selectByLimit(Integer page, Integer pageSize,String keyWord) {
-        int offset = (page -1 ) * pageSize;
+    public List<Food> selectByLimit(Integer page, Integer pageSize, String keyWord) {
+        int offset = (page - 1) * pageSize;
         return foodMapper.selectByLimit(offset, pageSize, keyWord);
     }
 

@@ -24,44 +24,12 @@ public class FoodController {
 
     @RequestMapping("/food/info")
     public FoodInfoVo getFoodInfo(@RequestParam BigInteger foodId) {
-        if (foodId == null ) {
-            throw new RuntimeException("foodId cannot null");
-        }
         Food food = foodService.getById(foodId);
-
-        if (food == null) {
-            throw new RuntimeException("Food with id " + foodId + " does not exist");
-        }
         FoodInfoVo vo = new FoodInfoVo();
-
-        String foodName = food.getName();
-        if (foodName == null || foodName.trim().isEmpty()) {
-            throw new RuntimeException("Food name cannot be null or empty");
-        }
         vo.setFoodName(food.getName());
-
-        String foodIntroduce = food.getFoodIntroduce();
-        if (foodIntroduce == null || foodIntroduce.trim().isEmpty()) {
-            throw new RuntimeException("Food introduce cannot be null or empty");
-        }
         vo.setFoodIntroduce(food.getFoodIntroduce());
-
-        Integer pageView = food.getViewCount();
-        if (pageView == null) {
-            throw new RuntimeException("Page view count cannot be null");
-        }
         vo.setPageView(food.getViewCount());
-
-        Integer createTime = food.getCreateTime();
-        if (createTime == null) {
-            throw new RuntimeException("Create time cannot be null");
-        }
         vo.setPublishTime(formatTimestamp(String.valueOf(food.getCreateTime())));
-
-        String foodPhotos = food.getFoodPhotos();
-        if (foodPhotos == null || foodPhotos.trim().isEmpty()) {
-            throw new RuntimeException("Food photos cannot be null or empty");
-        }
         vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
         return vo;
     }
@@ -76,10 +44,6 @@ public class FoodController {
                                   @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
                                   @RequestParam(value = "keyWord", required = false) String keyWord) {
         List<Food> foods = foodService.selectByLimit(page, pageSize,keyWord);
-        if (foods == null) {
-            throw new RuntimeException("Failed to retrieve food list");
-        }
-
         List<FoodItemVo> voList = new ArrayList<>();
         for (int i = 0; i < foods.size(); i++) {
             Food food = foods.get(i);

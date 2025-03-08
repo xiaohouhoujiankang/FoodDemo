@@ -21,27 +21,28 @@ public class FoodService {
         return foodMapper.getById(id);
     }
 
-    public int editFood(BigInteger id, String name, String foodPhotos, String foodIntroduce) {
-        int timestamp = (int) (System.currentTimeMillis() / 1000);
+    public BigInteger editFood(BigInteger id, String name, String foodPhotos, String foodIntroduce) {
         if (name == null || name.isEmpty()) {
-            throw new RuntimeException("name cannot be null or empty");
+            throw new RuntimeException("Food name cannot be empty");
         }
         if (foodPhotos == null || foodPhotos.isEmpty()) {
-            throw new RuntimeException("foodPhotos cannot be null or empty");
+            throw new RuntimeException("Food photos cannot be empty");
         }
         if (foodIntroduce == null || foodIntroduce.isEmpty()) {
-            throw new RuntimeException("foodIntroduce cannot be null or empty");
+            throw new RuntimeException("Food introduction cannot be empty");
         }
+
+        int timestamp = (int) (System.currentTimeMillis() / 1000);
         Food food = new Food();
         food.setName(name);
         food.setFoodPhotos(foodPhotos);
         food.setFoodIntroduce(foodIntroduce);
-        food.setCreateTime(timestamp);
         food.setUpdateTime(timestamp);
-        food.setIsDeleted(0);
+
         if (id == null) {
-            int newId = foodMapper.insert(food);
-            return newId;
+            food.setCreateTime(timestamp);
+            food.setIsDeleted(0);
+            foodMapper.insert(food);
         } else {
             Food existingFood = foodMapper.getById(id);
             if (existingFood == null) {
@@ -49,10 +50,9 @@ public class FoodService {
             }
             food.setId(id);
             foodMapper.update(food);
-            return id.intValue();
         }
+        return food.getId();
     }
-
 
 
     public int deleteFood(BigInteger id) {

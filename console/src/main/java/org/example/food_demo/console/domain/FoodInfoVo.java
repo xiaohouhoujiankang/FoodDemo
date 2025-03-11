@@ -14,5 +14,7 @@ public class FoodInfoVo {
     private List<String> slideShow;
     private String createTime;
     private String updateTime;
+    private String error;
+
 
 }

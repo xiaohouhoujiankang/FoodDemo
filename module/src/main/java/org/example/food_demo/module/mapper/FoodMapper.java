@@ -17,7 +17,7 @@ public interface FoodMapper {
     Food extractById(@Param("id") BigInteger id);
     int insert(@Param("food") Food food);
     int update(@Param("food") Food food);
-   @Update("update food set is_deleted=1,update_time=#{time} where id=#{id} limit 1")
+    @Update("update food set is_deleted=1,update_time=#{time} where id=#{id} limit 1")
     int delete(@Param("id") BigInteger id,@Param("time") Integer time);
     List<Food> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyWord") String keyWord);
     @Select("SELECT COUNT(*) FROM food WHERE is_deleted = 0")

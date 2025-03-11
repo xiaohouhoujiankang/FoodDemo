@@ -21,7 +21,7 @@ public class FoodService {
         return foodMapper.getById(id);
     }
 
-    public BigInteger editFood(BigInteger id, String name, String foodPhotos, String foodIntroduce) {
+    public BigInteger editFood(BigInteger id, String name, String foodPhotos, String foodIntroduce,BigInteger categoryId) {
         if (name == null || name.isEmpty()) {
             throw new RuntimeException("Food name cannot be empty");
         }
@@ -38,6 +38,7 @@ public class FoodService {
         food.setFoodPhotos(foodPhotos);
         food.setFoodIntroduce(foodIntroduce);
         food.setUpdateTime(timestamp);
+        food.setCategoryId(categoryId);
 
         if (id == null) {
             food.setCreateTime(timestamp);

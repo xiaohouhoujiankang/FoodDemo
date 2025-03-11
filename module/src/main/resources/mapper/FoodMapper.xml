@@ -3,7 +3,7 @@
 <mapper namespace="org.example.food_demo.module.mapper.FoodMapper">
 
     <insert id ="insert"
-                     parameterType="org.example.food_demo.module.entity.Food">
+            parameterType="org.example.food_demo.module.entity.Food">
         insert into food (
         <if test="food.name != null and food.name != ''">name,</if>
         <if test="food.foodPhotos != null and food.foodPhotos != ''">food_photos,</if>
@@ -11,6 +11,9 @@
         <if test="food.viewCount != null">view_count,</if>
         <if test="food.createTime != null">create_time,</if>
         <if test="food.updateTime != null">update_time,</if>
+        <if test="food.categoryId != null">category_id,</if>
+
+
         is_deleted
         ) values (
         <if test="food.name != null and food.name != ''">#{food.name},</if>
@@ -19,6 +22,8 @@
         <if test="food.viewCount != null">#{food.viewCount},</if>
         <if test="food.createTime != null">#{food.createTime,jdbcType=TIMESTAMP},</if>
         <if test="food.updateTime != null">#{food.updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="food.categoryId != null">#{food.categoryId},</if>
+
         #{food.isDeleted}
         )
     </insert>
@@ -34,6 +39,9 @@
             <if test="food.viewCount != null">view_count = #{food.viewCount},</if>
             <if test="food.updateTime != null">update_time = #{food.updateTime,jdbcType=TIMESTAMP},</if>
             <if test="food.isDeleted != null">is_deleted = #{food.isDeleted},</if>
+            <if test="food.categoryId != null">category_id = #{food.categoryId},</if>
+
+
         </set>
         where id = #{food.id}
     </update>

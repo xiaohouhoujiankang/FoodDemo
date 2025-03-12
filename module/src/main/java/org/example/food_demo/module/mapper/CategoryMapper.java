@@ -13,7 +13,6 @@ public interface CategoryMapper {
     @Select("SELECT * FROM category WHERE id = #{id} AND is_deleted = 0")
     Category getById(@Param("id") BigInteger id);
 
-
     @Select("SELECT * FROM category WHERE id = #{id}")
     Category extractById(@Param("id") BigInteger id);
     int insert(@Param("category") Category category);

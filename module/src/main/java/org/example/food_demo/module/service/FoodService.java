@@ -1,6 +1,8 @@
 package org.example.food_demo.module.service;
 
+import org.example.food_demo.module.entity.Category;
 import org.example.food_demo.module.entity.Food;
+import org.example.food_demo.module.mapper.CategoryMapper;
 import org.example.food_demo.module.mapper.FoodMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 public class FoodService {
     @Autowired
     private FoodMapper foodMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     public Food extractById(BigInteger id) {
         return foodMapper.extractById(id);
@@ -38,7 +42,10 @@ public class FoodService {
         food.setFoodPhotos(foodPhotos);
         food.setFoodIntroduce(foodIntroduce);
         food.setUpdateTime(timestamp);
-        food.setCategoryId(categoryId);
+        Category category = categoryMapper.getById(categoryId);
+        if (category == null) {
+            throw new RuntimeException("Category ID does not exist");
+        }
 
         if (id == null) {
             food.setCreateTime(timestamp);

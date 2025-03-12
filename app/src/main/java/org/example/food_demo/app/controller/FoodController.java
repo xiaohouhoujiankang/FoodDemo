@@ -42,6 +42,11 @@ public class FoodController {
         vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
         BigInteger categoryId = food.getCategoryId();
         Category category = categoryService.getById(categoryId);
+        if (category == null) {
+            FoodInfoVo info = new FoodInfoVo();
+            info.setError("category not found");
+            return info;
+        }
         vo.setCategoryName(category.getName());
         vo.setCategoryImage(category.getImage());
         return vo;
@@ -67,6 +72,9 @@ public class FoodController {
             vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             BigInteger categoryId = food.getCategoryId();
             Category category = categoryService.getById(categoryId);
+            if (category == null) {
+                continue;
+            }
             vo.setCategoryName(category.getName());
             voList.add(vo);
 
@@ -75,23 +83,5 @@ public class FoodController {
         return new FoodListVo(voList, isEnd);
     }
 
-    @RequestMapping("/category/list")
-    public List<CategoryItemVo> getCategoryList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
-                                                @RequestParam(value = "keyWord", required = false) String keyWord) {
-        List<Category> categories = categoryService.selectByLimit(page, pageSize, keyWord);
-        List<CategoryItemVo> voList = new ArrayList<>();
 
-        for (int i = 0; i < categories.size(); i++) {
-            Category category = categories.get(i);
-            CategoryItemVo vo = new CategoryItemVo();
-            vo.setCategoryId(category.getId());
-            vo.setCategoryName(category.getName());
-            vo.setCategoryImage(category.getImage());
-            voList.add(vo);
-        }
-
-        return voList;
-
-    }
 }

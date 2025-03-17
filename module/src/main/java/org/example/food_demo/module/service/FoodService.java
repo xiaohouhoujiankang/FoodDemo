@@ -35,6 +35,10 @@ public class FoodService {
         if (foodIntroduce == null || foodIntroduce.isEmpty()) {
             throw new RuntimeException("Food introduction cannot be empty");
         }
+        Category category = categoryMapper.getById(categoryId);
+        if (category == null) {
+            throw new RuntimeException("Category ID does not exist");
+        }
 
         int timestamp = (int) (System.currentTimeMillis() / 1000);
         Food food = new Food();
@@ -42,10 +46,6 @@ public class FoodService {
         food.setFoodPhotos(foodPhotos);
         food.setFoodIntroduce(foodIntroduce);
         food.setUpdateTime(timestamp);
-        Category category = categoryMapper.getById(categoryId);
-        if (category == null) {
-            throw new RuntimeException("Category ID does not exist");
-        }
 
         if (id == null) {
             food.setCreateTime(timestamp);

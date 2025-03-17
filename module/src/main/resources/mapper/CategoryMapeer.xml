@@ -26,13 +26,13 @@
         <set>
             `category_id` = #{categoryId},
             <if test="category.name!= null and category.name != ''">
-                `name` = #{ name },
+                `name` = #{name},
             </if>
             <if test="category.image!= null and category.image != ''">
-                `image` = #{ image },
+                `image` = #{image},
             </if>
             <if test="category.createTime != null">
-                `create_time` = #{ createTime },
+                `create_time` = #{createTime},
             </if>
             <if test="category.updateTime != null">
                 `update_time` = #{ updateTime },

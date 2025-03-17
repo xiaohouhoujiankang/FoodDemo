@@ -34,12 +34,6 @@ public class FoodController {
             info.setError("Food not found");
             return info;
         }
-        FoodInfoVo vo = new FoodInfoVo();
-        vo.setFoodName(food.getName());
-        vo.setFoodIntroduce(food.getFoodIntroduce());
-        vo.setPageView(food.getViewCount());
-        vo.setPublishTime(formatTimestamp(String.valueOf(food.getCreateTime())));
-        vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
         BigInteger categoryId = food.getCategoryId();
         Category category = categoryService.getById(categoryId);
         if (category == null) {
@@ -47,6 +41,12 @@ public class FoodController {
             info.setError("category not found");
             return info;
         }
+        FoodInfoVo vo = new FoodInfoVo();
+        vo.setFoodName(food.getName());
+        vo.setFoodIntroduce(food.getFoodIntroduce());
+        vo.setPageView(food.getViewCount());
+        vo.setPublishTime(formatTimestamp(String.valueOf(food.getCreateTime())));
+        vo.setSlideShow(List.of(food.getFoodPhotos().split("\\$")));
         vo.setCategoryName(category.getName());
         vo.setCategoryImage(category.getImage());
         return vo;
@@ -67,15 +67,15 @@ public class FoodController {
         for (int i = 0; i < foods.size(); i++) {
             Food food = foods.get(i);
             FoodItemVo vo = new FoodItemVo();
-            vo.setFoodId(food.getId());
-            vo.setFoodName(food.getName());
-            vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             BigInteger categoryId = food.getCategoryId();
             Category category = categoryService.getById(categoryId);
             if (category == null) {
                 continue;
             }
             vo.setCategoryName(category.getName());
+            vo.setFoodId(food.getId());
+            vo.setFoodName(food.getName());
+            vo.setFoodPhoto(food.getFoodPhotos().split("\\$")[0]);
             voList.add(vo);
 
         }

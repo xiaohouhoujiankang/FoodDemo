@@ -28,6 +28,22 @@ public class CategoryController {
             vo.setCategoryId(category.getId());
             vo.setCategoryName(category.getName());
             vo.setCategoryImage(category.getImage());
+            vo.setParentId(category.getParentId());
+
+
+            List<Category> subCategories = categoryService.selectSubCategories(category.getId(), keyWord);
+            List<CategoryItemVo> subVoList = new ArrayList<>();
+
+            for (int j = 0; j < subCategories.size(); j++) {
+                Category subCategory = subCategories.get(j);
+                CategoryItemVo subVo = new CategoryItemVo();
+                subVo.setCategoryId(subCategory.getId());
+                subVo.setCategoryName(subCategory.getName());
+                subVo.setCategoryImage(subCategory.getImage());
+                subVo.setParentId(subCategory.getParentId());
+                subVoList.add(subVo);
+            }
+            vo.setSubCategories(subVoList);
             voList.add(vo);
         }
 

@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @Accessors(chain = true)
 public class Category {
     private BigInteger id;
+    private BigInteger parentId;
     private String name;
     private String image;
     private Integer createTime;

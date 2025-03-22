@@ -22,5 +22,6 @@ public interface CategoryMapper {
     List<Category> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyWord") String keyWord);
     @Select("SELECT COUNT(*) FROM category WHERE is_deleted = 0")
     int getTotalCount();
+     List<Category> selectSubCategories(@Param("parentId") BigInteger parentId, @Param("keyWord") String keyWord);
 
 }

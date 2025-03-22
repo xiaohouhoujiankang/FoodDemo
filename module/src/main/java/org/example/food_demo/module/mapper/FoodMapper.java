@@ -22,4 +22,11 @@ public interface FoodMapper {
     List<Food> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyWord") String keyWord);
     @Select("SELECT COUNT(*) FROM food WHERE is_deleted = 0")
     int getTotalCount();
+    List<Integer> getCategoryIds(@Param("keyWord") String keyWord);
+
+    List<Food> searchFood(@Param("keyWord") String keyWord,
+                          @Param("categoryIds") List<Integer> categoryIds,
+                          @Param("offset") Integer offset,
+                          @Param("limit") Integer limit);
 }
+

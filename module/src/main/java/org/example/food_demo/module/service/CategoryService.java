@@ -1,5 +1,6 @@
 package org.example.food_demo.module.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.example.food_demo.module.entity.Category;
 import org.example.food_demo.module.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,8 @@ public class CategoryService {
 
     public int getTotalCount() {
         return categoryMapper.getTotalCount();
+    }
+    public List<Category> selectSubCategories(BigInteger parentId,String keyword){
+        return categoryMapper.selectSubCategories(parentId,keyword);
     }
 }

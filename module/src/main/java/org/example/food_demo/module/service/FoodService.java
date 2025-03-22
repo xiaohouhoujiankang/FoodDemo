@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -69,8 +70,32 @@ public class FoodService {
 
     public List<Food> selectByLimit(Integer page, Integer pageSize, String keyWord) {
         int offset = (page - 1) * pageSize;
-        return foodMapper.selectByLimit(offset, pageSize, keyWord);
+
+
+        List<Integer> categoryIds = foodMapper.getCategoryIds(keyWord);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < categoryIds.size(); i++) {
+            sb.append(categoryIds.get(i));
+            if (i < categoryIds.size() - 1) {
+                sb.append(",");
+            }
+        }
+        String categoryIdsStr = sb.toString();
+
+        List<Food> result = new ArrayList<>();
+        if (keyWord != null && !keyWord.isEmpty()) {
+            if (categoryIds.isEmpty()) {
+                categoryIds.add(-1);
+            }
+            result = foodMapper.searchFood(keyWord, categoryIds, offset, pageSize);
+        } else {
+            result = foodMapper.searchFood(keyWord, new ArrayList<>(), offset, pageSize);
+        }
+
+        return result;
     }
+
 
     public int getTotalCount() {
         return foodMapper.getTotalCount();

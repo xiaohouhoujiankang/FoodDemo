@@ -64,12 +64,13 @@ public class CategoryService {
         int offset = (page - 1) * pageSize;
         return categoryMapper.selectByLimit(offset, pageSize, keyWord);
     }
-
-
     public int getTotalCount() {
         return categoryMapper.getTotalCount();
     }
-    public List<Category> selectSubCategories(BigInteger parentId,String keyword){
-        return categoryMapper.selectSubCategories(parentId,keyword);
+    public List<Category> selectSubCategories(BigInteger parentId){
+        return categoryMapper.selectSubCategories(parentId);
+    }
+    public List<Category> selectCategories(){
+        return categoryMapper.selectCategories();
     }
 }

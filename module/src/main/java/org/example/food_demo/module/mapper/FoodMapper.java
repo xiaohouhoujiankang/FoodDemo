@@ -25,7 +25,7 @@ public interface FoodMapper {
     List<Integer> getCategoryIds(@Param("keyWord") String keyWord);
 
     List<Food> searchFood(@Param("keyWord") String keyWord,
-                          @Param("categoryIds") List<Integer> categoryIds,
+                          @Param("categoryIdsStr") String categoryIdsStr,
                           @Param("offset") Integer offset,
                           @Param("limit") Integer limit);
 }

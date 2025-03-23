@@ -58,11 +58,11 @@
     <select id="selectSubCategories" resultType="org.example.food_demo.module.entity.Category">
         SELECT * FROM category
         <where>
-            <if test="keyWord != null and keyWord != ''">
-                AND name LIKE CONCAT('%', #{keyWord}, '%')
-            </if>
-            AND parent_id = #{parentId}
+                parent_id = #{parentId}
             AND is_deleted = 0
         </where>
+    </select>
+    <select id="selectCategories" resultType="org.example.food_demo.module.entity.Category">
+        SELECT * FROM category WHERE is_deleted = 0
     </select>
 </mapper>

@@ -70,10 +70,7 @@ public class FoodService {
 
     public List<Food> selectByLimit(Integer page, Integer pageSize, String keyWord) {
         int offset = (page - 1) * pageSize;
-
-
         List<Integer> categoryIds = foodMapper.getCategoryIds(keyWord);
-
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < categoryIds.size(); i++) {
             sb.append(categoryIds.get(i));
@@ -82,17 +79,15 @@ public class FoodService {
             }
         }
         String categoryIdsStr = sb.toString();
-
         List<Food> result = new ArrayList<>();
         if (keyWord != null && !keyWord.isEmpty()) {
             if (categoryIds.isEmpty()) {
                 categoryIds.add(-1);
             }
-            result = foodMapper.searchFood(keyWord, categoryIds, offset, pageSize);
+            result = foodMapper.searchFood(keyWord, categoryIdsStr, offset, pageSize);
         } else {
-            result = foodMapper.searchFood(keyWord, new ArrayList<>(), offset, pageSize);
+            result = foodMapper.searchFood(keyWord, "", offset, pageSize);
         }
-
         return result;
     }
 

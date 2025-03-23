@@ -4,11 +4,8 @@ import org.example.food_demo.app.domain.CategoryItemVo;
 import org.example.food_demo.module.entity.Category;
 import org.example.food_demo.module.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.List;
 @RestController
@@ -16,10 +13,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     @RequestMapping("/category/list")
-    public List<CategoryItemVo> getCategoryList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
-                                                @RequestParam(value = "keyWord", required = false) String keyWord) {
-        List<Category> categories = categoryService.selectByLimit(page, pageSize, keyWord);
+    public List<CategoryItemVo> getCategoryList() {
+        List<Category> categories = categoryService.selectCategories();
         List<CategoryItemVo> voList = new ArrayList<>();
 
         for (int i = 0; i < categories.size(); i++) {
@@ -31,7 +26,7 @@ public class CategoryController {
             vo.setParentId(category.getParentId());
 
 
-            List<Category> subCategories = categoryService.selectSubCategories(category.getId(), keyWord);
+            List<Category> subCategories = categoryService.selectSubCategories(category.getId());
             List<CategoryItemVo> subVoList = new ArrayList<>();
 
             for (int j = 0; j < subCategories.size(); j++) {

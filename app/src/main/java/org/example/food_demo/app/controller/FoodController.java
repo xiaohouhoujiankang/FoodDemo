@@ -1,6 +1,5 @@
 package org.example.food_demo.app.controller;
 
-import org.example.food_demo.app.domain.CategoryItemVo;
 import org.example.food_demo.app.domain.FoodInfoVo;
 import org.example.food_demo.app.domain.FoodItemVo;
 import org.example.food_demo.app.domain.FoodListVo;
@@ -61,8 +60,8 @@ public class FoodController {
     @RequestMapping("/food/list")
     public FoodListVo getFoodList(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                   @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
-                                  @RequestParam(value = "keyWord", required = false) String keyWord) {
-        List<Food> foods = foodService.selectByLimit(page, pageSize, keyWord);
+                                  @RequestParam(value = "keyword", required = false) String keyword) {
+        List<Food> foods = foodService.selectByLimit(page, pageSize, keyword);
         List<FoodItemVo> voList = new ArrayList<>();
         for (int i = 0; i < foods.size(); i++) {
             Food food = foods.get(i);

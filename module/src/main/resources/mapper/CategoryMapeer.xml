@@ -47,8 +47,8 @@
     <select id="selectByLimit" resultType="org.example.food_demo.module.entity.Category">
         SELECT * FROM category
         <where>
-            <if test="keyWord != null and keyWord != ''">
-                AND name LIKE CONCAT('%', #{keyWord}, '%')
+            <if test="keyword != null and keyword != ''">
+                AND name LIKE CONCAT('%', #{keyword}, '%')
             </if>
             AND parent_id IS NULL
             AND is_deleted = 0

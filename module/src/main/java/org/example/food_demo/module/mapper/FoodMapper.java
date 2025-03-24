@@ -19,12 +19,12 @@ public interface FoodMapper {
     int update(@Param("food") Food food);
     @Update("update food set is_deleted=1,update_time=#{time} where id=#{id} limit 1")
     int delete(@Param("id") BigInteger id,@Param("time") Integer time);
-    List<Food> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyWord") String keyWord);
+    List<Food> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyword") String keyword);
     @Select("SELECT COUNT(*) FROM food WHERE is_deleted = 0")
     int getTotalCount();
-    List<Integer> getCategoryIds(@Param("keyWord") String keyWord);
+    List<Integer> getCategoryIds(@Param("keyword") String keyword);
 
-    List<Food> searchFood(@Param("keyWord") String keyWord,
+    List<Food> searchFood(@Param("keyword") String keyword,
                           @Param("categoryIdsStr") String categoryIdsStr,
                           @Param("offset") Integer offset,
                           @Param("limit") Integer limit);

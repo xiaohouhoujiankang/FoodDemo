@@ -44,17 +44,24 @@
     <select id="getCategoryIds" parameterType="String" resultType="int">
         SELECT id
         FROM category
-        WHERE name LIKE CONCAT('%', #{keyWord}, '%')
+        WHERE name LIKE CONCAT('%', #{keyword}, '%')
           AND is_deleted = 0
     </select>
     <select id="searchFood" parameterType="map" resultType="org.example.food_demo.module.entity.Food">
         SELECT * FROM food
         <where>
-            AND is_deleted = 0
-            <if test="keyWord != null and keyWord != ''">
-                AND (name LIKE CONCAT('%', #{keyWord}, '%')
-                OR category_id IN(#{categoryIdsStr}))
+            <if test="keyword != null and keyword != ''">
+                AND (name LIKE CONCAT('%', #{keyword}, '%')
+                <if test="categoryIdsStr != null and categoryIdsStr != ''">
+                    OR category_id IN (
+                    <foreach item="id" collection="categoryIdsStr" open="" separator="," close="">
+                        #{id}
+                    </foreach>
+                    )
+                </if>
+                )
             </if>
+            AND is_deleted = 0
         </where>
         LIMIT #{offset}, #{limit}
     </select>

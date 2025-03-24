@@ -68,9 +68,9 @@ public class FoodService {
         return foodMapper.delete(id, (int) (System.currentTimeMillis() / 1000));
     }
 
-    public List<Food> selectByLimit(Integer page, Integer pageSize, String keyWord) {
+    public List<Food> selectByLimit(Integer page, Integer pageSize, String keyword) {
         int offset = (page - 1) * pageSize;
-        List<Integer> categoryIds = foodMapper.getCategoryIds(keyWord);
+        List<Integer> categoryIds = foodMapper.getCategoryIds(keyword);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < categoryIds.size(); i++) {
             sb.append(categoryIds.get(i));
@@ -79,16 +79,7 @@ public class FoodService {
             }
         }
         String categoryIdsStr = sb.toString();
-        List<Food> result = new ArrayList<>();
-        if (keyWord != null && !keyWord.isEmpty()) {
-            if (categoryIds.isEmpty()) {
-                categoryIds.add(-1);
-            }
-            result = foodMapper.searchFood(keyWord, categoryIdsStr, offset, pageSize);
-        } else {
-            result = foodMapper.searchFood(keyWord, "", offset, pageSize);
-        }
-        return result;
+        return foodMapper.searchFood(keyword, categoryIdsStr, offset, pageSize);
     }
 
 

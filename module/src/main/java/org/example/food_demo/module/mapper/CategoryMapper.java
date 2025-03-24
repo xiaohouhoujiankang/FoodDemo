@@ -19,7 +19,7 @@ public interface CategoryMapper {
     int update(@Param("category") Category category);
     @Update("UPDATE category SET is_deleted = 1, update_time = #{time} WHERE id = #{id} LIMIT 1")
     int delete(@Param("id") BigInteger id, @Param("time") Integer time);
-    List<Category> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyWord") String keyWord);
+    List<Category> selectByLimit(@Param("offset") Integer offset, @Param("limit") Integer limit,@Param("keyword") String keyword);
     @Select("SELECT COUNT(*) FROM category WHERE is_deleted = 0")
     int getTotalCount();
 

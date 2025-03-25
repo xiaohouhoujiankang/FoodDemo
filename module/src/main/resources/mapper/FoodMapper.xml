@@ -51,15 +51,10 @@
         SELECT * FROM food
         <where>
             <if test="keyword != null and keyword != ''">
-                AND (name LIKE CONCAT('%', #{keyword}, '%')
-                <if test="categoryIdsStr != null and categoryIdsStr != ''">
-                    OR category_id IN (
-                    <foreach item="id" collection="categoryIdsStr" open="" separator="," close="">
-                        #{id}
-                    </foreach>
-                    )
-                </if>
-                )
+                 name LIKE CONCAT('%', #{keyword}, '%')</if>
+            <if test="categoryIdsStr != null and categoryIdsStr != ''">
+                OR category_id IN
+                (#{categoryIdsStr})
             </if>
             AND is_deleted = 0
         </where>

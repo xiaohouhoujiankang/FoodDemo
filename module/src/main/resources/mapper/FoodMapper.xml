@@ -54,7 +54,7 @@
                  name LIKE CONCAT('%', #{keyword}, '%')</if>
             <if test="categoryIdsStr != null and categoryIdsStr != ''">
                 OR category_id IN
-                (#{categoryIdsStr})
+                (${categoryIdsStr})
             </if>
             AND is_deleted = 0
         </where>

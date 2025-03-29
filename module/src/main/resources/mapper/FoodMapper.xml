@@ -50,15 +50,19 @@
     <select id="searchFood" parameterType="map" resultType="org.example.food_demo.module.entity.Food">
         SELECT * FROM food
         <where>
-            <if test="keyword != null and keyword != ''">
-                 name LIKE CONCAT('%', #{keyword}, '%')</if>
-            <if test="categoryIdsStr != null and categoryIdsStr != ''">
-                OR category_id IN
-                (${categoryIdsStr})
+            is_deleted = 0
+            <if test="keyword != null and keyword != '' or categoryIdsStr != null and categoryIdsStr != ''">
+                AND (
+                <if test="keyword != null and keyword != ''">
+                    name LIKE CONCAT('%', #{keyword}, '%')
+                </if>
+                <if test="categoryIdsStr != null and categoryIdsStr != ''">
+                    <if test="keyword != null and keyword != ''">OR</if>
+                    category_id IN(${categoryIdsStr})
+                </if>
+                )
             </if>
-            AND is_deleted = 0
         </where>
         LIMIT #{offset}, #{limit}
     </select>
-
 </mapper>

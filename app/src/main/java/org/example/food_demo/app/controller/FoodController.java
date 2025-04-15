@@ -1,8 +1,6 @@
 package org.example.food_demo.app.controller;
 
-import org.example.food_demo.app.domain.FoodInfoVo;
-import org.example.food_demo.app.domain.FoodItemVo;
-import org.example.food_demo.app.domain.FoodListVo;
+import org.example.food_demo.app.domain.*;
 import org.example.food_demo.module.entity.Category;
 import org.example.food_demo.module.entity.Food;
 import org.example.food_demo.module.service.CategoryService;
@@ -58,9 +56,14 @@ public class FoodController {
     }
 
     @RequestMapping("/food/list")
-    public FoodListVo getFoodList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                  @RequestParam(value = "keyword", required = false) String keyword) {
+    public FoodListVo getFoodList(
+            @RequestParam(value = "wp", required = false) String wpJson,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        Wp wp = WpUtils.fromBase64Json(wpJson, Wp.class);
+
+        Integer page = (wp != null) ? wp.getPage() : 1;
+        Integer pageSize = (wp != null) ? wp.getPageSize() : 10;
+
         List<Food> foods = foodService.selectByLimit(page, pageSize, keyword);
         List<FoodItemVo> voList = new ArrayList<>();
         for (int i = 0; i < foods.size(); i++) {

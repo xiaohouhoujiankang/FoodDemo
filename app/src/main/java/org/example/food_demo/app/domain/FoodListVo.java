@@ -13,11 +13,12 @@ public class FoodListVo {
 
     private List<FoodItemVo> list;
     private Boolean isEnd;
+    private Wp wp;
 
-
-    public FoodListVo(List<FoodItemVo> list,Boolean isEnd) {
+    public FoodListVo(List<FoodItemVo> list, Boolean isEnd, Wp wp) {
         this.list = list;
         this.isEnd = isEnd;
+        this.wp = wp;
     }
 
 

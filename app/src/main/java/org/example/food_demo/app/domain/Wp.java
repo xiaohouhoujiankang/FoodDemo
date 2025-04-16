@@ -10,5 +10,6 @@ public class Wp {
 
     @JSONField(name = "pageSize")
     private Integer pageSize;
-
+    @JSONField(name = "keyword")
+    private String keyword;
 }

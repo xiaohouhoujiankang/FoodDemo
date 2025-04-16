@@ -1,6 +1,7 @@
-package org.example.food_demo.app.domain;
+package org.example.food_demo.app.util;
 
 import com.alibaba.fastjson.JSON;
+import com.mysql.cj.util.Base64Decoder;
 
 import java.util.Base64;
 
@@ -9,7 +10,8 @@ public class WpUtils {
         if (base64Json == null || base64Json.trim().isEmpty()) {
             return null;
         }
-        String json = new String(Base64.getDecoder().decode(base64Json));
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Json);
+        String json = new String(decodedBytes);
         return JSON.parseObject(json, clazz);
     }
 

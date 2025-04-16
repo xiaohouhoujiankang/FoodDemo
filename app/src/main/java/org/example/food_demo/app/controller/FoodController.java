@@ -1,6 +1,8 @@
 package org.example.food_demo.app.controller;
 
 import org.example.food_demo.app.domain.*;
+import org.example.food_demo.app.domain.Wp;
+import org.example.food_demo.app.util.WpUtils;
 import org.example.food_demo.module.entity.Category;
 import org.example.food_demo.module.entity.Food;
 import org.example.food_demo.module.service.CategoryService;
@@ -60,11 +62,18 @@ public class FoodController {
             @RequestParam(value = "wp", required = false) String wpJson,
             @RequestParam(value = "keyword", required = false) String keyword) {
         Wp wp = WpUtils.fromBase64Json(wpJson, Wp.class);
+        if (wp == null) {
+            wp = new Wp();
+            wp.setPage(1);
+            wp.setPageSize(10);
+        }
+        if (keyword != null && !keyword.isEmpty()) {
+            wp.setKeyword(keyword);
+        }
+        Integer page = wp.getPage();
+        Integer pageSize = wp.getPageSize();
 
-        Integer page = (wp != null) ? wp.getPage() : 1;
-        Integer pageSize = (wp != null) ? wp.getPageSize() : 10;
-
-        List<Food> foods = foodService.selectByLimit(page, pageSize, keyword);
+        List<Food> foods = foodService.selectByLimit(page, pageSize, wp.getKeyword());
         List<FoodItemVo> voList = new ArrayList<>();
         for (int i = 0; i < foods.size(); i++) {
             Food food = foods.get(i);
@@ -82,7 +91,7 @@ public class FoodController {
 
         }
         boolean isEnd = foods.size() < pageSize;
-        return new FoodListVo(voList, isEnd);
+        return new FoodListVo(voList, isEnd,wp);
     }
 
 

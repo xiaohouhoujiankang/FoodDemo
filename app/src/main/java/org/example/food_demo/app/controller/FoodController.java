@@ -1,5 +1,6 @@
 package org.example.food_demo.app.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.food_demo.app.domain.*;
 import org.example.food_demo.app.domain.Wp;
 import org.example.food_demo.app.util.WpUtils;
@@ -91,7 +92,8 @@ public class FoodController {
 
         }
         boolean isEnd = foods.size() < pageSize;
-        return new FoodListVo(voList, isEnd,wp);
+        String encodedWp = WpUtils.toBase64Json(wp);
+        return new FoodListVo(voList, isEnd,encodedWp);
     }
 
 

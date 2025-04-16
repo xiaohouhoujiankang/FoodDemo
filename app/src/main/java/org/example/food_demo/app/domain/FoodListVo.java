@@ -13,9 +13,9 @@ public class FoodListVo {
 
     private List<FoodItemVo> list;
     private Boolean isEnd;
-    private Wp wp;
+    private String wp;
 
-    public FoodListVo(List<FoodItemVo> list, Boolean isEnd, Wp wp) {
+    public FoodListVo(List<FoodItemVo> list, Boolean isEnd, String wp) {
         this.list = list;
         this.isEnd = isEnd;
         this.wp = wp;

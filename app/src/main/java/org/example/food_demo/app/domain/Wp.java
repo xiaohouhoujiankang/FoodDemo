@@ -7,7 +7,6 @@ import lombok.Data;
 public class Wp {
     @JSONField(name = "page")
     private Integer page;
-
     @JSONField(name = "pageSize")
     private Integer pageSize;
     @JSONField(name = "keyword")

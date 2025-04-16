@@ -14,6 +14,14 @@ public class WpUtils {
         String json = new String(decodedBytes);
         return JSON.parseObject(json, clazz);
     }
-
+    public static <T> String toBase64Json(T object) {
+        if (object == null) {
+            return null;
+        }
+        String jsonStr = JSON.toJSONString(object);
+        byte[] jsonBytes = jsonStr.getBytes();
+        byte[] encodedBytes = Base64.getEncoder().encode(jsonBytes);
+        return new String(encodedBytes);
+    }
 
 }

@@ -66,7 +66,7 @@ public class FoodController {
         if (wp == null) {
             wp = new Wp();
             wp.setPage(1);
-            wp.setPageSize(10);
+            wp.setPageSize(5);
         }
         if (keyword != null && !keyword.isEmpty()) {
             wp.setKeyword(keyword);
